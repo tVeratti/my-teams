@@ -1,0 +1,31 @@
+.routes__wrapper {
+  position: relative;
+}
+
+.routes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  background: #ddd;
+}
+
+.fade-appear,
+.fade-enter {
+  opacity: 0.1;
+}
+
+.fade-appear-active,
+.fade-enter-active {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0.1;
+}
