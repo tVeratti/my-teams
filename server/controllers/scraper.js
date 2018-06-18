@@ -1,6 +1,5 @@
-var request = require('request');
+var co = require('co');
 var Nightmare = require('nightmare');
-var nightmare = new Nightmare({ show: true });
 
 var Team = require('./../models/Team');
 var Game = require('./../models/Game');
@@ -18,29 +17,62 @@ var sel_SCHEDULE_ROW =
   '#myss_scheduleviewlist .myss_gridAltRow';
 
 module.exports = app => {
-  app.get('/scrape/teams', (req, res) => {
-    request(url, (error, response, html) => {
-      if (error || response.statusCode != 200) return;
-
-      nightmare
-        .goto(url)
-        .wait(sel_LEAGUE)
-        .click(sel_LEAGUE)
-        .wait(sel_COOKIE)
-        .click(sel_COOKIE)
-        // Get teams
-        .wait(sel_TEAM)
-        .evaluate(scrapeTeams, sel_TEAM)
-        .evaluate(upsertTeams)
-        // Get schedule
-        .click(sel_SCHEDULE)
-        .wait(sel_PAGE)
-        .evaluate(scrapeSchedule, sel_PAGE, sel_SCHEDULE_ROW)
-        .evaluate(upsertGames)
-        .end();
-    });
+  app.get('/scrape/teams', co.wrap(function*(req, res) {
+    console.log('/scrape/teams');
+      run();
+    // nightmare
+    //   .goto(url)
+    //   .wait(sel_LEAGUE)
+    //   .click(sel_LEAGUE)
+    //   .wait(sel_COOKIE)
+    //   .click(sel_COOKIE)
+    //   // Get teams
+    //   .wait(sel_TEAM)
+    //   .evaluate(scrapeTeams, sel_TEAM)
+    //   .evaluate(upsertTeams)
+    //   // Get schedule
+    //   .click(sel_SCHEDULE)
+    //   .wait(sel_PAGE)
+    //   .evaluate(scrapeSchedule, sel_PAGE, sel_SCHEDULE_ROW)
+    //   .evaluate(upsertGames)
+    //   .end()
+    //   .then(console.log)
+    //   .catch(console.error);
   });
 };
+
+function* run() {
+  var nightmare = new Nightmare({ show: false });
+  var games = [];
+
+  // Load base page.
+  yield nightmare
+    .goto(url)
+    .wait(sel_LEAGUE)
+    .click(sel_LEAGUE)
+    .wait(sel_COOKIE)
+    .click(sel_COOKIE)
+    .click(sel_SCHEDULE)
+    .wait(sel_PAGE);
+
+  // Get pagination links
+  var pages = yield nightmare.evaluate(scrapePages, sel_PAGE);
+
+  // Click each page and scrape teams from each table.
+  pages.forEach(p => {
+    var pageGames = yield nightmare
+    .click(sel_PAGE + ':nth-child(' + (i + 1) + ') a')
+    .evaluate(scrapeGames, sel_SCHEDULE_ROW);
+    games = games.concat(pageGames);
+  });
+
+  // Upsert games to Mongod and end nightmare.
+  yield nightmare
+    .evaluate(upsertGames)
+    .end()
+    .then(console.log)
+    .catch(console.error);
+}
 
 function scrapeTeams(sel_TEAM) {
   console.log('scrape: teams');
@@ -50,11 +82,15 @@ function scrapeTeams(sel_TEAM) {
 }
 
 function upsertTeams(teams) {
-  console.log('upsert: teams');
-  teams.forEach(name => {
-    var query = { name };
-    Team.findOneAndUpdate(query, query, { upsert: true });
-  });
+  console.log('upsert: teams', teams);
+  // teams.forEach(name => {
+  //   var query = { name };
+  //   Team.findOneAndUpdate(query, query, { upsert: true });
+  // });
+}
+
+function scrapePages(sel_PAGE) {
+  return document.querySelectorAll(sel_PAGE);
 }
 
 function scrapeSchedule(sel_PAGE, sel_SCHEDULE_ROW) {
@@ -88,9 +124,9 @@ function scrapeGames(sel_SCHEDULE_ROW) {
 }
 
 function upsertGames(games) {
-  console.log('upsert: games');
-  games.forEach(game => {
-    var query = { index: game.index };
-    Game.findOneAndUpdate(query, game, { upsert: true });
-  });
+  console.log('upsert: games', games);
+  // games.forEach(game => {
+  //   var query = { index: game.index };
+  //   Game.findOneAndUpdate(query, game, { upsert: true });
+  // });
 }
