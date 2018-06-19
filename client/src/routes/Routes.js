@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Login from '../login/Login';
+import Games from '../games/Games';
 
 import './Routes.scss';
 
@@ -19,8 +20,8 @@ const Routes = props => {
             <div className="routes">
               {isAuthenticated ? (
                 <Switch location={location}>
-                  {/* Routing Main Views 
-                <Route exact path="/" component={Home} />*/}
+                  {/* Routing Main Views */}
+                  <Route exact path="/" component={Games} />
                   {/*<Route path="/site/:name" component={Site} />
                     <Route path="/asset/:id" component={Edit} />*/}
                 </Switch>

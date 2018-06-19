@@ -36,7 +36,7 @@ module.exports = app => {
   app.get('/scrape/games', (req, res) => {
     // Delete all existing games before scraping
     // the entire current schedule.
-    Game.collection.drop();
+    Game.remove().exec();
 
     nightmare
       .goto(url)
@@ -78,7 +78,7 @@ function getPageGames(i, max) {
     .click(pageSelector)
     .wait(sel_SCHEDULE_TABLE)
     .evaluate(scrapeGames, sel_SCHEDULE_ROW)
-    .then(upsertGames)
+    .then(insertGames)
     .then(() => getPageGames(i + 1, max));
 }
 
@@ -87,7 +87,7 @@ function scrapeGames(sel_SCHEDULE_ROW) {
   document.querySelectorAll(sel_SCHEDULE_ROW).forEach((row, i) => {
     // Get column value inner text for quick reference.
     var columns = [];
-    row.querySelectorAll('td').forEach(td => columns.push(td.innerText));
+    row.querySelectorAll('td').forEach(td => columns.push(td.innerText.trim()));
 
     // Clean scores out from completed games.
     var clean = name => name.replace(/(^\d*-)/, '');
@@ -104,6 +104,6 @@ function scrapeGames(sel_SCHEDULE_ROW) {
   return games;
 }
 
-function upsertGames(games) {
+function insertGames(games) {
   Game.collection.insert(games);
 }
