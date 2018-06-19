@@ -1,6 +1,9 @@
 {
   "name": "my-teams",
   "version": "0.0.1",
+  "engines": {
+    "node": "8.9.3"
+  },
   "scripts": {
     "start": "node server.js",
     "build": "parcel build client/src/index.html",
