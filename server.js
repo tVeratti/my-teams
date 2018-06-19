@@ -1,6 +1,7 @@
 // taskkill /f /im node.exe
 
 const express = require('express');
+const enforce = require('express-sslify');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -19,11 +20,11 @@ const sess = {
   cookie: {}
 };
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(enforce.HTTPS({ trustProtoHeader: true }));
-//   app.set('trust proxy', 1);
-//   sess.cookie.secure = true;
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  app.set('trust proxy', 1);
+  sess.cookie.secure = true;
+}
 
 app.use(session(sess));
 
