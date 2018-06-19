@@ -49,6 +49,7 @@ mongoose.connect(url);
 // API
 // =========================================
 require('./server/controllers/user')(app);
+require('./server/controllers/games')(app);
 require('./server/controllers/scraper')(app);
 
 // Catch-all route to server index and allow client-side
