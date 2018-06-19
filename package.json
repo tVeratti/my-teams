@@ -1,6 +1,8 @@
 {
   "name": "my-teams",
   "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
   "engines": {
     "node": "8.9.3"
   },
@@ -9,6 +11,12 @@
     "build": "parcel build client/src/index.html --public-url=\"/\"",
     "watch": "parcel watch client/src/index.html --public-url=\"/\"",
     "debug": "node_modules/nightmare/node_modules/electron-prebuilt/dist/electron --help"
+  },
+  "author": "Tatiana Veratti (TatianaVeratti@Gmail.com)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tVeratti/my-teams.git"
   },
   "devDependencies": {
     "autoprefixer": "^8.5.1",
