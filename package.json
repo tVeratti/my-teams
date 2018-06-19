@@ -6,8 +6,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "parcel build client/src/index.html",
-    "watch": "parcel watch client/src/index.html",
+    "build": "parcel build client/src/index.html --public-url=\"/\"",
+    "watch": "parcel watch client/src/index.html --public-url=\"/\"",
     "debug": "node_modules/nightmare/node_modules/electron-prebuilt/dist/electron --help"
   },
   "devDependencies": {

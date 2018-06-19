@@ -7,7 +7,9 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const app = express();
 app.use(bodyParser.json());
