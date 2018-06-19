@@ -1,12 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Input } from 'semantic-ui-react';
 import memoize from 'memoize-one';
 
 import actions from './Actions';
 
 import Game from './Game';
 
-class Games extends PureComponent {
+class Games extends Component {
   state = { filter: '' };
 
   filter = memoize((list, team) =>
@@ -22,16 +23,11 @@ class Games extends PureComponent {
     this.setState({ filter: ev.target.value.toLowerCase() });
   };
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(actions.fetchGames());
-  }
-
   render() {
     const games = this.filter(this.props.games, this.state.filter);
     return (
       <div>
-        <input onChange={this.updateFilter} />
+        <Input onChange={this.updateFilter} />
         <ul className="games">{games.map(g => <Game key={g._id} {...g} />)}</ul>
       </div>
     );

@@ -3,6 +3,7 @@ const initialState = JSON.parse(user) || {};
 
 function reducer(state = initialState, action) {
   let nextState = { ...state };
+  let teams = state.teams || [];
 
   switch (action.type) {
     case 'RECEIVE_USER':
@@ -13,6 +14,9 @@ function reducer(state = initialState, action) {
           isAuthenticated: true
         };
       }
+      break;
+    case 'MODIFY_TEAMS':
+      nextState.teams = action.teams;
       break;
   }
 

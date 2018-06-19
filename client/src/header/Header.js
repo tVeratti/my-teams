@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import xhr from 'xhr';
 
-import actions from '../user/Actions';
+import userActions from '../user/Actions';
+import gamesActions from '../games/Actions';
 
 import './Header.scss';
 
@@ -12,6 +14,7 @@ class Header extends Component {
 
     return (
       <div className="header">
+        <Link to="/">Home</Link>
         <div className="header__content">{userNode}</div>
       </div>
     );
@@ -19,7 +22,8 @@ class Header extends Component {
 
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(actions.fetchUser());
+    dispatch(userActions.fetchUser());
+    dispatch(gamesActions.fetchGames())
   }
 
   renderUser() {
@@ -28,7 +32,7 @@ class Header extends Component {
 
     return (
       <div>
-        {google.name}
+        <Link to="/profile">{google.name}</Link>
         <a href="/logout">Log Out</a>
       </div>
     );

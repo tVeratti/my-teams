@@ -8,6 +8,7 @@ const user = new mongoose.Schema({
     email: String,
     name: String
   },
+  teams: { type: [String], default: [] },
   created: { type: Date, default: Date.now() },
   lastActive: { type: Date, default: Date.now() }
 });
