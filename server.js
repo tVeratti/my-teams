@@ -7,9 +7,9 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+require('dotenv').config();
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,7 +22,7 @@ const sess = {
   cookie: {}
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
   app.set('trust proxy', 1);
   sess.cookie.secure = true;
@@ -53,7 +53,7 @@ mongoose.connect(url);
 // =========================================
 require('./server/controllers/user')(app);
 require('./server/controllers/games')(app);
-require('./server/controllers/scraper')(app);
+if (!isProduction) require('./server/controllers/scraper')(app);
 
 // Catch-all route to server index and allow client-side
 // routing to handle all client-side routes.

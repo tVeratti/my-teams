@@ -1,5 +1,5 @@
 var Nightmare = require('nightmare');
-var nightmare = new Nightmare({ show: true, waitTimeout: 15000 });
+var nightmare = new Nightmare({ show: false, waitTimeout: 15000 });
 
 var Team = require('./../models/Team');
 var Game = require('./../models/Game');
