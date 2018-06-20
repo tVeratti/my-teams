@@ -1,34 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Input } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 import memoize from 'memoize-one';
 
 import actions from './Actions';
 
 import Game from './Game';
+import Countdown from './Countdown';
 
 class Games extends Component {
-  state = { filter: '' };
+  filter = memoize((games, teams) => {
+    let prevDate;
 
-  filter = memoize((list, team) =>
-    list.filter(game => {
-      return (
-        game.home.toLowerCase().includes(team) ||
-        game.away.toLowerCase().includes(team)
-      );
-    })
-  );
+    return games
+      .filter(game => {
+        return (
+          (teams.includes(game.home) || teams.includes(game.away)) &&
+          game.status === 'Scheduled'
+        );
+      })
+      .map(game => {
+        const first = game.date !== prevDate;
+        prevDate = game.date;
+        return { ...game, first };
+      });
+  });
 
   updateFilter = ev => {
     this.setState({ filter: ev.target.value.toLowerCase() });
   };
 
   render() {
-    const games = this.filter(this.props.games, this.state.filter);
+    const { games, user } = this.props;
+    const myGames = this.filter(games, user.teams);
+
     return (
       <div>
-        <Input onChange={this.updateFilter} />
-        <ul className="games">{games.map(g => <Game key={g._id} {...g} />)}</ul>
+        <h1>Games</h1>
+        <Countdown game={myGames[0]} />
+        <ul className="games">
+          {myGames.map(g => <Game key={g._id} {...g} />)}
+        </ul>
       </div>
     );
   }

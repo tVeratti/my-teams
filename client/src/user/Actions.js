@@ -24,6 +24,7 @@ export default {
       xhr.post(
         { uri: '/api/user/teams', body: { teams }, json: true },
         (err, res, doc) => {
+          console.log(doc);
           dispatch({ type: 'MODIFY_TEAMS', teams });
         }
       );
