@@ -22,11 +22,11 @@ const sess = {
   cookie: {}
 };
 
-if (isProduction) {
-  app.use(enforce.HTTPS({ trustProtoHeader: true }));
-  app.set('trust proxy', 1);
-  sess.cookie.secure = true;
-}
+// if (isProduction) {
+//   app.use(enforce.HTTPS({ trustProtoHeader: true }));
+//   app.set('trust proxy', 1);
+//   sess.cookie.secure = true;
+// }
 
 app.use(session(sess));
 
