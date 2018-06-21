@@ -1,8 +1,18 @@
-.game {
-  display: block;
-  padding: 1rem;
+@import "../variables";
 
-  .divider {
-    margin-top: 0;
-  }
+.step .title {
+    margin-bottom: 10px;
+}
+
+.team {
+    color: rgba(black, 0.4);
+    &--mine {
+        color: $color-F;
+        font-weight: bold;
+    }
+}
+
+.ui.cards {
+    text-align: center;
+    justify-content: center;
 }

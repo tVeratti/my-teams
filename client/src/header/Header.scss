@@ -1,8 +1,21 @@
-.header__content {
-  text-align: right;
-  a {
-    display: inline-block;
-    margin-left: 10px;
-    text-decoration: none;
-  }
+
+// .header__content {
+//   text-align: right;
+//   a {
+//     display: inline-block;
+//     margin-left: 10px;
+//     text-decoration: none;
+//   }
+// }
+
+.ui.secondary.menu {
+  border: none;
+}
+
+.ui.secondary.inverted.pointing.menu {
+  border-color: rgba(black, 0.25);
+}
+
+.ui.inverted.menu .active.item:hover {
+  background: none;
 }

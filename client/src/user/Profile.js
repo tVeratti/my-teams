@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dropdown, Card, Button, Divider } from 'semantic-ui-react';
+import {
+  Dropdown,
+  Card,
+  Button,
+  Divider,
+  Segment,
+  Header
+} from 'semantic-ui-react';
 import memoize from 'memoize-one';
 
 import { toOption } from '../utils/options';
@@ -25,11 +32,7 @@ class Profile extends Component {
         fluid
         selection
         search
-        button
-        labeled
-        className="icon"
-        icon="plus"
-        text="Add Team"
+        placeholder="Add Team"
         options={options}
         onChange={this.selectTeam}
       />
@@ -40,7 +43,7 @@ class Profile extends Component {
     const { teams = [] } = this.props.user;
     const cards = teams.map(t => {
       const removeButton = (
-        <Button fluid basic color="red" onClick={this.removeTeam.bind(this, t)}>
+        <Button fluid onClick={this.removeTeam.bind(this, t)}>
           Remove
         </Button>
       );
@@ -60,10 +63,11 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className="profile">
-        <h1>My Teams</h1>
-        {this.renderControls()}
-        <Divider hidden />
+      <div>
+        <Header inverted textAlign="center" size="huge">
+          Teams
+        </Header>
+        <Segment>{this.renderControls()}</Segment>
         {this.renderTeams()}
       </div>
     );

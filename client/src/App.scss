@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
-//@import "setup";
 @import "variables";
 
 *, *:before, *:after {
@@ -9,17 +8,14 @@
 html {
     position: relative;
     min-height: 100%;
-    //font-size: 62.5%; // For REM sizing, base 10
     font-family: 'Ubuntu',sans-serif;
     box-sizing: border-box;
-
-    
 }
 
 body{
-    //font-size: 14px;
     margin: 0;
     padding: 20px;
-    background: #eee;
+    background: linear-gradient(to top, $color-F, $color-FF);
+    background-attachment: fixed;
     cursor: url("assets/ball.png"), auto;
 }

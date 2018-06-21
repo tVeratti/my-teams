@@ -17,9 +17,9 @@ class Header extends Component {
     const userNode = this.renderUser();
 
     return (
-      <Menu fluid secondary>
+      <Menu fluid secondary inverted pointing size="huge">
         <Menu.Item active={this.curPath() === '/'}>
-          <Link to="/">Games</Link>
+          <Link to="/">Schedule</Link>
         </Menu.Item>
         {this.renderUser()}
       </Menu>
@@ -39,7 +39,7 @@ class Header extends Component {
 
     return [
       <Menu.Item key="1" active={this.curPath() === 'profile'}>
-        <Link to="/profile">My Teams</Link>
+        <Link to="/profile">Teams</Link>
       </Menu.Item>,
       <Menu.Item key="2" position="right">
         <a href="/logout">Log Out</a>

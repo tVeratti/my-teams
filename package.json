@@ -7,9 +7,10 @@
     "node": "8.9.3"
   },
   "scripts": {
-    "postinstall": "parcel build client/src/index.html --public-url=\"/\"",
-    "start": "node server.js",
-    "watch": "parcel watch client/src/index.html --public-url=\"/\""
+    "postinstall": "npm run build",
+    "build": "parcel build client/src/index.html --public-url=\"/\"",
+    "watch": "parcel watch client/src/index.html --public-url=\"/\"",
+    "start": "node server.js"
   },
   "author": "Tatiana Veratti (TatianaVeratti@Gmail.com)",
   "license": "ISC",

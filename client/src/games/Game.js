@@ -1,27 +1,29 @@
 import React from 'react';
-import { Card, Label, Divider } from 'semantic-ui-react';
+import { Step, Label, Divider } from 'semantic-ui-react';
+import classnames from 'classnames';
 import './Game.scss';
 
 export default props => {
+  const homeClassNames = classnames('team', {
+    'team--home': true,
+    'team--mine': props.isHome
+  });
+
+  const awayClassNames = classnames('team', {
+    'team--away': true,
+    'team--mine': props.isAway
+  });
+
   return (
-    <li className="game">
-      <Card>
-        <Card.Content>
-          {props.first && (
-            <div>
-              <Label ribbon color="teal">
-                {props.date}
-              </Label>
-              <Divider hidden />
-            </div>
-          )}
-          <Card.Header>{props.time}</Card.Header>
-          <Card.Meta>{props.status}</Card.Meta>
-          <Card.Description>
-            {props.home} vs. {props.away}
-          </Card.Description>
-        </Card.Content>
-      </Card>
-    </li>
+    <Step>
+      {props.countdown && <Label corner="left" icon="time" color="teal" />}
+      <Step.Content>
+        <Step.Title>{props.time}</Step.Title>
+        <Step.Description>
+          <div className={homeClassNames}>{props.home}</div>
+          <div className={awayClassNames}>{props.away}</div>
+        </Step.Description>
+      </Step.Content>
+    </Step>
   );
 };
