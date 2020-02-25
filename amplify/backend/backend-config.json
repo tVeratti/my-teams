@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"myteams880ac737": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}
