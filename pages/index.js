@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-
-import UserContext from '../src/authentication/context';
+import GamesContext from '../src/components/games/context';
 
 const Index = () => {
-  const user = useContext(UserContext);
-  return <div>Hello {user && user.username}</div>;
+  const games = useContext(GamesContext);
+  console.log({ games });
+  return <div>Hello</div>;
 };
 
 export default Index;

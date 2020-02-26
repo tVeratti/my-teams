@@ -1,32 +1,33 @@
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Amplify, { Auth } from 'aws-amplify';
 
-import UserContext from '../src/authentication/context';
-import aws_exports from '../src/aws-exports';
+import GamesContext from '../src/components/games/context';
+
 import theme from '../src/theme';
 
-Amplify.configure(aws_exports);
+//const storageGames = localStorage?.getItem('games');
+//const initialGames = storageGames && JSON.parse(storageGames);
 
 function App({ Component, pageProps }) {
-  const [user, setUser] = useState(null);
+  const [games, setGames] = useState(null);
 
   useEffect(() => {
-    const getUser = async () => {
-      const cognitoUser = await Auth.currentAuthenticatedUser();
-      setUser(cognitoUser);
+    const getGames = async () => {
+      const { data } = await API.graphql(graphqlOperation(listGames));
+      setGames(data.listGames.items);
+      //localStorage?.setItem('games', JSON.stringify(allGames));
     };
 
-    if (!user) getUser();
+    if (!games) getGames();
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={user}>
+      <GamesContext.Provider value={games}>
         <CssBaseline />
         <Component {...pageProps} />
-      </UserContext.Provider>
+      </GamesContext.Provider>
     </ThemeProvider>
   );
 }

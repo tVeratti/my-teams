@@ -9,7 +9,10 @@
   "scripts": {
     "dev": "next -p 1050",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "netlify-lambda install",
+    "start:lambda": "netlify-lambda serve src/lambda",
+    "build:lambda": "netlify-lambda build src/lambda"
   },
   "author": "Tatiana Veratti (TatianaVeratti@Gmail.com)",
   "license": "ISC",
@@ -23,13 +26,13 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.9.4",
-    "aws-amplify": "^2.2.5",
-    "aws-amplify-react": "^3.1.6",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
-    "mongoose": "^5.1.5",
+    "mongodb": "^3.5.4",
+    "mongoose": "^5.9.2",
+    "netlify-lambda": "^1.6.3",
     "next": "^9.2.2",
-    "nightmare": "^3.0.1",
-    "npm": "^6.1.0"
+    "nightmare": "^3.0.2",
+    "npm": "^6.14.0"
   }
 }
