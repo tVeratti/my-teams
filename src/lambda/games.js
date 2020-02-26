@@ -1,27 +1,31 @@
+require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 
+// Mongo Connection Config
 const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_CONNECTION } = process.env;
-const uri = 'NOPE';
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const uri = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_CONNECTION}`;
+const options = { useNewUrlParser: true };
 
-exports.handler = function handler(event, context, callback) {
-  context.callbackWaitsForEmptyEventLoop = false;
-  client.connect(err => {
-    client
+export async function handler(event, context) {
+  const client = await MongoClient.connect(uri, options);
+  if (!client) return respond('Unable to connect to mongodb', 500);
+
+  try {
+    const games = await client
       .db('my-teams')
       .collection('games')
-      .find({})
-      .toArray((err, result) => {
-        callback(null, {
-          statusCode: 200,
-          body: JSON.stringify(result || [])
-        });
-      });
-    client.close();
-  });
+      .find({}) // ALL games - no query
+      .toArray();
 
-  return {
-    statusCode: 200,
-    body: 'Hello, world!'
-  };
-};
+    return respond(JSON.stringify(games));
+  } catch (err) {
+    return respond(err, 500);
+  } finally {
+    client.close();
+  }
+}
+
+const respond = (body, statusCode = 200) => ({
+  statusCode,
+  body
+});

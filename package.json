@@ -27,7 +27,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "body-parser": "^1.18.3",
-    "dotenv": "^6.0.0",
+    "dotenv": "^6.2.0",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.2",
     "netlify-lambda": "^1.6.3",
