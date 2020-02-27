@@ -1,10 +1,7 @@
-import { useContext } from 'react';
-import GamesContext from '../src/components/games/context';
+import { Search } from '../src/components/search';
 
 const Index = () => {
-  const games = useContext(GamesContext);
-  console.log({ games });
-  return <div>Hello</div>;
+  return <Search />;
 };
 
 export default Index;

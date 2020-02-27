@@ -24,8 +24,12 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.9.4",
+    "@material-ui/icons": "^4.9.1",
+    "autosuggest-highlight": "^3.1.1",
     "dotenv": "^6.2.0",
     "local-storage": "^2.0.0",
+    "lodash": "^4.17.15",
+    "memoize-one": "^5.1.1",
     "mongodb": "^3.5.4",
     "netlify-lambda": "^1.6.3",
     "next": "^9.2.2",
