@@ -5,6 +5,9 @@ import parse from 'autosuggest-highlight/parse';
 import { Group } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
+  listItem: {
+    fontWeight: 600
+  },
   text: {
     padding: theme.spacing(0.25, 0)
   },
@@ -35,6 +38,7 @@ const Match = ({ team, matches }) => {
           </span>
         ))}
         secondary={'Saturday Morning'}
+        className={classes.listItem}
       />
     </ListItem>
   );
