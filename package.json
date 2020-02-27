@@ -5,6 +5,7 @@
   "scripts": {
     "start:app": "node server/development.js",
     "build:app": "next build",
+    "export:app": "next build && next export",
     "postinstall": "netlify-lambda install",
     "start:lambda": "netlify-lambda serve src/lambda",
     "build:lambda": "netlify-lambda build src/lambda"
