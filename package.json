@@ -1,15 +1,10 @@
 {
   "name": "my-teams",
   "version": "0.0.1",
-  "description": "",
-  "main": "server.js",
-  "engines": {
-    "node": "8.9.3"
-  },
+  "description": "Organize kcsoccerdome soccer schedule based on teams",
   "scripts": {
-    "dev": "next -p 1050",
-    "build": "next build",
-    "start": "next start",
+    "start:app": "node server/development.js",
+    "build:app": "next build",
     "postinstall": "netlify-lambda install",
     "start:lambda": "netlify-lambda serve src/lambda",
     "build:lambda": "netlify-lambda build src/lambda"
@@ -21,18 +16,18 @@
     "url": "https://github.com/tVeratti/my-teams.git"
   },
   "devDependencies": {
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.4",
-    "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
+    "local-storage": "^2.0.0",
     "mongodb": "^3.5.4",
-    "mongoose": "^5.9.2",
     "netlify-lambda": "^1.6.3",
     "next": "^9.2.2",
-    "nightmare": "^3.0.2",
-    "npm": "^6.14.0"
+    "nightmare": "^3.0.2"
   }
 }
