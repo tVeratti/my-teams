@@ -9,7 +9,7 @@ export default function useGames() {
 
   useEffect(() => {
     const getGames = async () => {
-      const response = await fetch('/.netlify/lambda/games');
+      const response = await fetch('/.netlify/functions/games');
       const data = await response.json();
       setGames(data);
       storage.set(KEY_GAMES, data);

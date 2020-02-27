@@ -18,10 +18,10 @@ app
 
     // Set up netlify function proxy.
     server.use(
-      '/.netlify/lambda/*',
+      '/.netlify/functions/*',
       createProxyMiddleware({
         target: 'http://localhost:9000',
-        pathRewrite: { '^/.netlify/lambda': '/' },
+        pathRewrite: { '^/.netlify/functions': '/' },
         changeOrigin: true
       })
     );
