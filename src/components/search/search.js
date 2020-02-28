@@ -1,13 +1,17 @@
-import { useState } from 'react';
-import { Paper, Container } from '@material-ui/core';
+import { useState, useEffect } from 'react';
+import { Container, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Input from './input';
 import Results from './results';
 
 const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(10)
+  header: {
+    padding: theme.spacing(3)
+  },
+  button: {
+    margin: theme.spacing(1, 0),
+    float: 'right'
   }
 }));
 
@@ -17,10 +21,12 @@ const Search = () => {
 
   return (
     <div>
-      <Container maxWidth="sm">
-        <div className={classes.paper}>
+      <header className={classes.header}>
+        <Container maxWidth="sm">
           <Input onChange={setFilter} />
-        </div>
+        </Container>
+      </header>
+      <Container maxWidth="sm">
         <Results filter={filter} />
       </Container>
     </div>

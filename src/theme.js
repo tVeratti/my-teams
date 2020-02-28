@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import { blueGrey, lightBlue } from '@material-ui/core/colors';
+import { blueGrey, green, lightBlue } from '@material-ui/core/colors';
 
 // Create a theme instance.
 const theme = createMuiTheme({

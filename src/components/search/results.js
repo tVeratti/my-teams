@@ -1,9 +1,7 @@
-import uniq from 'lodash/uniq';
-import flatten from 'lodash/flatten';
-import sortBy from 'lodash/sortBy';
+import { uniq, groupBy } from 'lodash';
 import memoize from 'memoize-one';
 import match from 'autosuggest-highlight/match';
-import { List, Paper } from '@material-ui/core';
+import { Paper, List, ListSubheader } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import useGames from '../games/useGames';
@@ -11,39 +9,72 @@ import Match from './match';
 
 const useStyles = makeStyles(theme => ({
   list: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(1, 0)
+  },
+  group: {
+    marginTop: theme.spacing(1),
+    background: theme.palette.background.default
   }
 }));
 
-const getTeams = games => uniq(flatten(games.map(g => [g.home, g.away])));
-const getMatches = (team, filter) => ({ team, matches: match(team, filter) });
-const getFilteredTeams = (teams, filter) =>
-  sortBy(
-    teams
-      .map(team => getMatches(team, filter))
-      .filter(team => team.matches.length),
-    [t => -t.matches.length + t.matches[0][0]]
-  );
+const getSeasons = games => {
+  const teams = {};
+  const seasons = groupBy(games, 'season');
 
-const memoizedTeams = memoize(getTeams);
+  Object.keys(seasons).forEach(s => {
+    const season = seasons[s];
+    const groups = groupBy(season, 'home');
+    teams[s] = [];
+
+    const teamNames = uniq(Object.keys(groups));
+    teamNames.forEach(name => {
+      teams[s].push(name);
+    });
+  });
+
+  return teams;
+};
+
+const getMatches = (name, filter) => ({ name, matches: match(name, filter) });
+
+const getFilteredTeams = (seasons, filter) => {
+  const teams = {};
+
+  Object.keys(seasons).forEach(s => {
+    const filteredTeams = seasons[s]
+      .map(name => getMatches(name, filter))
+      .filter(team => team.matches.length);
+
+    if (filteredTeams.length) {
+      teams[s] = filteredTeams;
+    }
+  });
+
+  return teams;
+  //[t => -t.matches.length + t.matches[0][0]]
+};
+
+const getGroupedTeams = teams => groupBy(teams, 'season');
+
+const memoizedSeasons = memoize(getSeasons);
 const memoizedFilteredTeams = memoize(getFilteredTeams);
 
 const Results = ({ filter }) => {
   const games = useGames() || [];
-  const teams = memoizedTeams(games);
-  const filteredTeams = memoizedFilteredTeams(teams, filter);
   const classes = useStyles();
 
+  const seasons = memoizedSeasons(games);
+  const filteredTeams = memoizedFilteredTeams(seasons, filter);
+
   return (
-    <React.Fragment>
-      {!!filteredTeams.length && (
-        <List className={classes.list}>
-          {filteredTeams.map(team => (
-            <Match key={team.team} {...team} filter={filter} />
-          ))}
-        </List>
+    <List className={classes.list}>
+      {/* <ListSubheader className={classes.group}>My Teams</ListSubheader> */}
+      {Object.keys(filteredTeams).map(season =>
+        filteredTeams[season].map(team => (
+          <Match key={team.name} {...team} season={season} filter={filter} />
+        ))
       )}
-    </React.Fragment>
+    </List>
   );
 };
 
