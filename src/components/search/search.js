@@ -18,9 +18,9 @@ const Search = () => {
   return (
     <div>
       <Container maxWidth="sm">
-        <Paper elevation={0} className={classes.paper}>
+        <div className={classes.paper}>
           <Input onChange={setFilter} />
-        </Paper>
+        </div>
         <Results filter={filter} />
       </Container>
     </div>

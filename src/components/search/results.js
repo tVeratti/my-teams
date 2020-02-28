@@ -37,13 +37,11 @@ const Results = ({ filter }) => {
   return (
     <React.Fragment>
       {!!filteredTeams.length && (
-        <Paper elevation={0} variant="outlined" className={classes.list}>
-          <List>
-            {filteredTeams.map(team => (
-              <Match key={team.team} {...team} filter={filter} />
-            ))}
-          </List>
-        </Paper>
+        <List className={classes.list}>
+          {filteredTeams.map(team => (
+            <Match key={team.team} {...team} filter={filter} />
+          ))}
+        </List>
       )}
     </React.Fragment>
   );

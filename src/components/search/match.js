@@ -1,19 +1,23 @@
-import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import {
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Typography
+} from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';
 
 import parse from 'autosuggest-highlight/parse';
 import { Group } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
-  listItem: {
-    fontWeight: 600
-  },
   text: {
-    padding: theme.spacing(0.25, 0)
+    padding: theme.spacing(0.25, 0),
+    fontWeight: 600
   },
   highlight: {
     borderBottom: `2px solid ${theme.palette.primary.main}`,
     padding: theme.spacing(0.25, 0),
+    fontWeight: 600,
     color: theme.palette.primary.dark,
     background: fade(theme.palette.primary.light, 0.2)
   }
@@ -30,12 +34,14 @@ const Match = ({ team, matches }) => {
       </ListItemIcon>
       <ListItemText
         primary={parts.map((p, i) => (
-          <span
+          <Typography
             key={`${p.text}-${i}`}
+            component="span"
+            variant="h6"
             className={p.highlight ? classes.highlight : classes.text}
           >
             {p.text}
-          </span>
+          </Typography>
         ))}
         secondary={'Saturday Morning'}
         className={classes.listItem}
