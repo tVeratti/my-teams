@@ -11,13 +11,16 @@ const useStyles = makeStyles(theme => {
       width: '100%',
       padding: theme.spacing(2),
       paddingLeft: theme.spacing(8),
-      fontSize: theme.typography.h4.fontSize,
-      border: `1px solid ${fade(theme.palette.text.primary, 0.3)}`,
+      //color: theme.palette.primary.dark,
+      fontSize: theme.typography.h6.fontSize,
+      border: `1px solid ${fade(theme.palette.primary.main, 0.5)}`,
       borderRadius: theme.shape.borderRadius,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
       transition: 'border-color 0.3s ease-in-out',
       '&:hover,&:focus': {
         outline: 0,
-        borderColor: fade(theme.palette.text.primary, 0.6)
+        borderColor: fade(theme.palette.primary.main, 0.7)
       }
     },
     icon: {
@@ -25,7 +28,7 @@ const useStyles = makeStyles(theme => {
       left: theme.spacing(2),
       top: '50%',
       transform: 'translateY(-50%)',
-      fill: fade(theme.palette.text.primary, 0.3)
+      fill: theme.palette.primary.main
     }
   };
 });
@@ -39,7 +42,7 @@ const Input = ({ onChange }) => {
         onChange={e => onChange(e.target.value)}
         className={classes.input}
       />
-      <Icon className={classes.icon} fontSize="large" />
+      <Icon className={classes.icon} />
     </div>
   );
 };

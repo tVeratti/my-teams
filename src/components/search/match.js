@@ -1,35 +1,37 @@
+import { useState } from 'react';
 import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Paper,
   Typography
 } from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';
 
 import parse from 'autosuggest-highlight/parse';
-import { Group } from '@material-ui/icons';
+import StarCheckBox from './star';
 
 const useStyles = makeStyles(theme => ({
   text: {
     padding: theme.spacing(0.5, 0)
-    //fontWeight: 600
+    //fontWeight: 500
   },
   highlight: {
     padding: theme.spacing(0.5, 0),
-    //fontWeight: 600,
+    //fontWeight: 500,
     color: theme.palette.primary.dark,
     background: fade(theme.palette.primary.light, 0.2)
   }
 }));
 
-const Match = ({ name, season, matches }) => {
+const Match = ({ name, season, matches, selected, onClick }) => {
   const classes = useStyles();
   const parts = matches ? parse(name, matches) : [{ text: name }];
 
   return (
-    <ListItem button>
+    <ListItem button onClick={onClick}>
       <ListItemIcon>
-        <Group />
+        <StarCheckBox checked={selected} />
       </ListItemIcon>
       <ListItemText
         primary={parts.map((p, i) => (

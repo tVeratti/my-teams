@@ -11,13 +11,13 @@ export async function handler(event, context) {
   if (!client) return respond('Unable to connect to mongodb', 500);
 
   try {
-    const games = await client
+    const teams = await client
       .db('my-teams')
-      .collection('games')
-      .find({}) // ALL games - no query
+      .collection('teams')
+      .find({}) // ALL teams - no query
       .toArray();
 
-    return respond(JSON.stringify(games));
+    return respond(JSON.stringify(teams));
   } catch (err) {
     return respond(err, 500);
   } finally {

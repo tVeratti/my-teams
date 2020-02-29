@@ -1,7 +1,9 @@
 require('dotenv').config();
 const Nightmare = require('nightmare');
 const MongoClient = require('mongodb').MongoClient;
-const vo = require('vo');
+const uniq = require('lodash/uniq');
+
+const { groupTeamsBySeason } = require('./games');
 
 let nightmare;
 
@@ -30,18 +32,19 @@ const run = async function() {
     // Clear all games data before scraping all fresh.
     await client
       .db('my-teams')
-      .collection('games')
+      .collection('teams')
       .deleteMany({});
 
-    nightmare = new Nightmare({ show: true, waitTimeout: 5000 });
+    nightmare = new Nightmare({ show: true, waitTimeout: 2000 });
 
-    const seasons = await nightmare
+    let seasons = await nightmare
       .goto(url)
       .wait(sel_LEAGUE)
       .evaluate(scrapeSeasons, sel_SEASON);
 
+    seasons = uniq(seasons);
+
     for (let i = 0; i < seasons.length; i++) {
-      console.log(i);
       const season = seasons[i];
       // Get all games for each season schedule
       let scheduleSelector = i % 2 ? '.myss_gridRow' : '.myss_gridAltRow';
@@ -57,11 +60,10 @@ const run = async function() {
         .evaluate(scrapePages, sel_PAGE)
         .then(max => getPageGames(max, season))
         .then(games => {
-          console.log('insert', games);
           client
             .db('my-teams')
-            .collection('games')
-            .insertMany(games);
+            .collection('teams')
+            .insert(groupTeamsBySeason(games, season));
         })
         .catch(console.log);
 
@@ -76,14 +78,14 @@ const run = async function() {
 };
 
 function scrapeSeasons(sel_SEASON) {
-  return [...document.querySelectorAll(sel_SEASON)].map(el => el.innerText);
+  return [...document.querySelectorAll(sel_SEASON)].map(el =>
+    el.innerText.replace(/((\s-\s)(.+))+/gi, '')
+  );
 }
 
 function scrapePages(sel_PAGE) {
   return document.querySelectorAll(sel_PAGE).length;
 }
-
-function getSeasons() {}
 
 async function getPageGames(max, season) {
   let games = [];
