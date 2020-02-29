@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     borderTopLeftRadius: 0,
     backgroundColor: fade(theme.palette.primary.light, 0.1),
     //whiteSpace: 'nowrap',
-    overflow: 'visible'
+    overflow: 'hidden'
   },
   chip: {
     margin: theme.spacing(0.5, 0.5, 0, 0)
