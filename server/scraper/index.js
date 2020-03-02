@@ -35,7 +35,7 @@ const run = async function() {
       .collection('teams')
       .deleteMany({});
 
-    nightmare = new Nightmare({ show: true, waitTimeout: 2000 });
+    nightmare = new Nightmare({ show: false, waitTimeout: 2000 });
 
     let seasons = await nightmare
       .goto(url)
@@ -72,6 +72,7 @@ const run = async function() {
   } catch (err) {
     console.log(err);
   } finally {
+    console.log('Finished');
     nightmare.end();
     client.close();
   }

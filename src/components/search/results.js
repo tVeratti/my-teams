@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 const getMatches = (team, filter) => {
   return {
     ...team,
-    id: `${team.season}_${team.name}`,
     matches: match(team.name, filter)
   };
 };

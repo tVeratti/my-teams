@@ -14,6 +14,7 @@ const groupTeamsBySeason = (allGames, season) => {
     teams.push({
       name,
       season,
+      id: `${season}_${name}`,
       games: [...homeGames, ...awayGames]
     });
   });

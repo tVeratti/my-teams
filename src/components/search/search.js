@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react';
-import {
-  Container,
-  Chip,
-  Stepper,
-  Step,
-  StepLabel,
-  StepButton,
-  Slide,
-  Typography
-} from '@material-ui/core';
+import { useState, useEffect, useRef } from 'react';
+import { Container, Chip, Tabs, Tab, Slide } from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';
+import cookies from 'js-cookie';
 
 import Input from './input';
 import Results from './results';
+import useTeams from '../teams/useTeams';
+import Navigation from '../navigation';
+import useMyTeams from '../teams/useMyTeams';
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -21,7 +16,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.default,
     zIndex: 10
   },
-  stepper: {
+  tabs: {
+    marginBottom: theme.spacing(2),
     backgroundColor: 'transparent'
   },
   noSelections: {
@@ -49,8 +45,10 @@ const useStyles = makeStyles(theme => ({
 
 const Search = () => {
   const [filter, setFilter] = useState('');
-  const [selections, setSelections] = useState([]);
   const classes = useStyles();
+
+  const teams = useTeams();
+  const [selections, setSelections] = useMyTeams(teams);
 
   const removeSelection = s => () =>
     setSelections(selections.filter(team => team.id !== s.id));
@@ -59,22 +57,16 @@ const Search = () => {
     <div>
       <header className={classes.header}>
         <Container maxWidth="sm">
-          <Stepper nonLinear activeStep={0} className={classes.stepper}>
-            <Step>
-              <StepLabel>Select Team(s)</StepLabel>
-            </Step>
-            <Step onClick={() => console.log('VIew')}>
-              <StepButton>View Schedule</StepButton>
-            </Step>
-          </Stepper>
+          <Navigation />
           <Input onChange={setFilter} />
-
           <div className={classes.selections}>
             {!selections.length && (
-              <div className={classes.noSelections}>No Teams Selected</div>
+              <div key="no-selections" className={classes.noSelections}>
+                No Teams Selected
+              </div>
             )}
             {selections.map(s => (
-              <Slide direction="left" in={true} unmountOnExit>
+              <Slide key={s.name} direction="left" in={true} unmountOnExit>
                 <Chip
                   label={s.name}
                   className={classes.chip}

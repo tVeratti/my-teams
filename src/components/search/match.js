@@ -14,11 +14,9 @@ import StarCheckBox from './star';
 const useStyles = makeStyles(theme => ({
   text: {
     padding: theme.spacing(0.5, 0)
-    //fontWeight: 500
   },
   highlight: {
     padding: theme.spacing(0.5, 0),
-    //fontWeight: 500,
     color: theme.palette.primary.dark,
     background: fade(theme.palette.primary.light, 0.2)
   }
