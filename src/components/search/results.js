@@ -1,16 +1,15 @@
 import memoize from 'memoize-one';
 import { sortBy } from 'lodash';
 import match from 'autosuggest-highlight/match';
-import { Paper, List, ListSubheader, Divider } from '@material-ui/core';
+import { Paper, List, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Match from './match';
 import useTeams from '../teams/useTeams';
 
 const useStyles = makeStyles(theme => ({
-  group: {
-    marginTop: theme.spacing(1),
-    background: theme.palette.background.default
+  list: {
+    padding: 0
   }
 }));
 
@@ -41,33 +40,37 @@ const getFilteredTeams = (allTeams, filter) => {
 
 const memoizedFilteredTeams = memoize(getFilteredTeams);
 
-const Results = ({ filter, selections, onSelection }) => {
+const Results = ({ filter, selections, onAddSelection, onRemoveSelection }) => {
   const teams = useTeams() || [];
   const classes = useStyles();
   const filteredTeams = memoizedFilteredTeams(teams, filter);
+  const showResults = !!filteredTeams.length;
+  if (!showResults) return <React.Fragment />;
 
   return (
-    <List>
-      {filteredTeams.map((team, i) => {
-        const selected = selections.some(s => s.id === team.id);
-        const onClick = () => {
-          if (selected) onSelection(selections.filter(s => s.id !== team.id));
-          else onSelection([...selections, team]);
-        };
-        return (
-          <React.Fragment>
-            {!!i && <Divider />}
-            <Match
-              key={team.id}
-              {...team}
-              filter={filter}
-              selected={selected}
-              onClick={onClick}
-            />
-          </React.Fragment>
-        );
-      })}
-    </List>
+    <Paper elevation={0} variant="outlined">
+      <List className={classes.list}>
+        {filteredTeams.map((team, i) => {
+          const selected = selections.some(s => s.id === team.id);
+          const onClick = () => {
+            if (selected) onRemoveSelection(team)();
+            else onAddSelection(team)();
+          };
+          return (
+            <React.Fragment>
+              {!!i && <Divider />}
+              <Match
+                key={team.id}
+                {...team}
+                filter={filter}
+                selected={selected}
+                onClick={onClick}
+              />
+            </React.Fragment>
+          );
+        })}
+      </List>
+    </Paper>
   );
 };
 

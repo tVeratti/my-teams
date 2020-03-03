@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Paper,
   Typography
 } from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';

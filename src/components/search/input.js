@@ -9,14 +9,12 @@ const useStyles = makeStyles(theme => {
     input: {
       maxWidth: '100%',
       width: '100%',
+      margin: theme.spacing(2, 0),
       padding: theme.spacing(2),
       paddingLeft: theme.spacing(8),
-      //color: theme.palette.primary.dark,
       fontSize: theme.typography.h6.fontSize,
       border: `1px solid ${fade(theme.palette.primary.main, 0.5)}`,
       borderRadius: theme.shape.borderRadius,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
       transition: 'border-color 0.3s ease-in-out',
       '&:hover,&:focus': {
         outline: 0,
@@ -33,12 +31,13 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-const Input = ({ onChange }) => {
+const Input = ({ value, onChange }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
       <input
+        value={value}
         onChange={e => onChange(e.target.value)}
         className={classes.input}
       />

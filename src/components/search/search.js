@@ -1,41 +1,34 @@
-import { useState, useEffect, useRef } from 'react';
-import { Container, Chip, Tabs, Tab, Slide } from '@material-ui/core';
+import { useState } from 'react';
+import { Container, Chip, Slide, Typography } from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';
-import cookies from 'js-cookie';
 
 import Input from './input';
 import Results from './results';
 import useTeams from '../teams/useTeams';
-import Navigation from '../navigation';
 import useMyTeams from '../teams/useMyTeams';
 
 const useStyles = makeStyles(theme => ({
   header: {
     position: 'sticky',
     top: 0,
+    paddingBottom: theme.spacing(2),
     backgroundColor: theme.palette.background.default,
     zIndex: 10
   },
-  tabs: {
-    marginBottom: theme.spacing(2),
-    backgroundColor: 'transparent'
-  },
-  noSelections: {
+  selectionLabel: {
+    display: 'block',
     fontSize: theme.typography.caption.fontSize,
-    lineHeight: '30px',
-    color: fade(theme.palette.primary.dark, 0.5),
-    textAlign: 'center'
+    textAlign: 'center',
+    color: fade(theme.palette.text.primary, 0.3)
+  },
+  count: {
+    fontWeight: 700,
+    color: theme.palette.primary.main
   },
   selections: {
-    minHeight: theme.spacing(6),
-    padding: theme.spacing(1),
-    border: `1px solid ${fade(theme.palette.primary.light, 0.1)}`,
-    borderTop: 0,
+    padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
-    backgroundColor: fade(theme.palette.primary.light, 0.1),
-    //whiteSpace: 'nowrap',
+    backgroundColor: theme.palette.action.hover,
     overflow: 'hidden'
   },
   chip: {
@@ -53,18 +46,18 @@ const Search = () => {
   const removeSelection = s => () =>
     setSelections(selections.filter(team => team.id !== s.id));
 
+  const addSelection = s => () => setSelections([...selections, s]);
+
   return (
-    <div>
+    <React.Fragment>
       <header className={classes.header}>
         <Container maxWidth="sm">
-          <Navigation />
-          <Input onChange={setFilter} />
+          <Input onChange={setFilter} value={filter} />
           <div className={classes.selections}>
-            {!selections.length && (
-              <div key="no-selections" className={classes.noSelections}>
-                No Teams Selected
-              </div>
-            )}
+            <Typography variant="button" className={classes.selectionLabel}>
+              <span className={classes.count}>{selections.length}</span> Teams
+              Selected
+            </Typography>
             {selections.map(s => (
               <Slide key={s.name} direction="left" in={true} unmountOnExit>
                 <Chip
@@ -84,11 +77,12 @@ const Search = () => {
           <Results
             filter={filter}
             selections={selections}
-            onSelection={setSelections}
+            onAddSelection={addSelection}
+            onRemoveSelection={removeSelection}
           />
         </Container>
       </section>
-    </div>
+    </React.Fragment>
   );
 };
 
