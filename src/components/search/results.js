@@ -57,7 +57,7 @@ const Results = ({ filter, selections, onAddSelection, onRemoveSelection }) => {
             else onAddSelection(team)();
           };
           return (
-            <React.Fragment>
+            <React.Fragment key={team.id}>
               {!!i && <Divider />}
               <Match
                 key={team.id}

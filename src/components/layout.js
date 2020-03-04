@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     justifyContent: 'space-between',
     flexShrink: 0,
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
     textAlign: 'center'
   },
   dash: {
@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
   return (
     <div className={classes.layout}>
       <div className={classes.content}>{children}</div>
-      <footer className={classes.footer}>
+      <Container maxWidth="sm" component="footer" className={classes.footer}>
         <Typography variant="caption" color="textSecondary">
           <a
             href="https://github.com/tVeratti/my-teams"
@@ -57,7 +57,7 @@ const Layout = ({ children }) => {
             veratti
           </a>
         </Typography>
-      </footer>
+      </Container>
     </div>
   );
 };
