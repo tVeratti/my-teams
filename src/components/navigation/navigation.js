@@ -17,14 +17,7 @@ const Navigation = ({ tab }) => {
   return (
     <AppBar position="static">
       <Container maxWidth="sm">
-        <Tabs
-          value={tab}
-          variant="fullWidth"
-          //indicatorColor="primary"
-          //textColor="primary"
-          centered
-          className={classes.tabs}
-        >
+        <Tabs value={tab} variant="fullWidth" centered className={classes.tabs}>
           <Tab
             label="Teams"
             component="a"

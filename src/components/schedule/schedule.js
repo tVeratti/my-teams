@@ -82,7 +82,7 @@ const memoizeGames = memoize(getGames);
 const Schedule = () => {
   const classes = useStyles();
   const [teams, setTeams] = useMyTeams();
-  if (!teams.length) return <div>You must select some teams!</div>;
+  if (!teams.length) return <div />;
 
   const gameWeeks = memoizeGames(teams);
   const weeks = Object.keys(gameWeeks);
