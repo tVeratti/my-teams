@@ -3,7 +3,7 @@ import { flatten } from 'lodash';
 import cookies from 'js-cookie';
 import useTeams from './useTeams';
 
-const COOKIE_KEY = 'MY_TEAMS';
+export const COOKIE_KEY = 'MY_TEAMS';
 
 const getCookieTeams = teams => {
   const cookieTeams = cookies.getJSON(COOKIE_KEY) || [];

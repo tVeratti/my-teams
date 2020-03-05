@@ -48,7 +48,9 @@ const Layout = ({ children }) => {
           </a>
         </Typography>
         <Typography variant="caption" color="textSecondary">
-          {`© ${new Date().getFullYear()}`}
+          <span
+            className={classes.link}
+          >{`© ${new Date().getFullYear()}`}</span>
           <span className={classes.dash} />
           <a
             href="https://www.linkedin.com/in/tatianaveratti/"

@@ -11,24 +11,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Navigation = ({ tab, onTabChange }) => {
+const Navigation = ({ tab }) => {
   const classes = useStyles();
 
-  const onChange = (e, newValue) => onTabChange(newValue);
   return (
     <AppBar position="static">
       <Container maxWidth="sm">
         <Tabs
           value={tab}
-          onChange={onChange}
           variant="fullWidth"
           //indicatorColor="primary"
           //textColor="primary"
           centered
           className={classes.tabs}
         >
-          <Tab label="Teams" className={classes.tab} icon={<PlaylistAdd />} />
-          <Tab label="Schedule" className={classes.tab} icon={<Today />} />
+          <Tab
+            label="Teams"
+            component="a"
+            href="/"
+            className={classes.tab}
+            icon={<PlaylistAdd />}
+          />
+          <Tab
+            label="Schedule"
+            component="a"
+            href="/schedule"
+            className={classes.tab}
+            icon={<Today />}
+          />
         </Tabs>
       </Container>
     </AppBar>

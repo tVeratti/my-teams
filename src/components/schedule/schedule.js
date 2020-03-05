@@ -14,7 +14,7 @@ import useMyTeams from '../teams/useMyTeams';
 
 // -- 1. Grey out days passed
 // -- 2. Made by / About
-// 3. Analytics
+// -- 3. Analytics
 // 4. Actions (copy, share)
 // 5. Alternate themes
 
@@ -107,7 +107,9 @@ const Schedule = () => {
               {games.map(g => {
                 const isHome = teamNames.includes(g.home);
                 const isBoth = isHome && teamNames.includes(g.away);
-                const isDone = dayjs().isAfter(dayjs(g.date));
+                const isDone = dayjs()
+                  .subtract(1, 'day')
+                  .isAfter(dayjs(g.date));
                 const team = isHome ? g.home : g.away;
                 const opponent = isHome ? g.away : g.home;
                 const date = dayjs(g.date).format('ddd');
