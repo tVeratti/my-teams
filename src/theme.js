@@ -1,10 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import { teal, grey } from '@material-ui/core/colors';
+import { teal, grey, lightBlue } from '@material-ui/core/colors';
 
-// Create a theme instance.
-const theme = createMuiTheme({
+const baseTheme = {
   palette: {
+    //type: 'dark',
     primary: teal,
     secondary: grey
     // text: {
@@ -12,6 +12,9 @@ const theme = createMuiTheme({
     //   secondary: blueGrey[300]
     // }
   }
-});
+};
+
+// Create a theme instance.
+const theme = createMuiTheme(baseTheme);
 
 export default theme;

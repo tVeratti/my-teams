@@ -6,12 +6,13 @@ import Input from './input';
 import Results from './results';
 import useTeams from '../teams/useTeams';
 import useMyTeams from '../teams/useMyTeams';
+import Heading from '../heading';
 
 const useStyles = makeStyles(theme => ({
   header: {
     position: 'sticky',
     top: 0,
-    paddingBottom: theme.spacing(2),
+    padding: theme.spacing(2, 0),
     backgroundColor: theme.palette.background.default,
     zIndex: 10
   },
@@ -51,7 +52,11 @@ const Search = () => {
   return (
     <React.Fragment>
       <header className={classes.header}>
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
+          <Heading
+            title="Add Teams"
+            subtitle="Search for your teams by name. All selected teams will be added to the composite schedule."
+          />
           <Input onChange={setFilter} value={filter} />
           <div className={classes.selections}>
             <Typography variant="button" className={classes.selectionLabel}>

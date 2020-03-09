@@ -1,41 +1,37 @@
-import { AppBar, Tabs, Tab, Container } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { PlaylistAdd, Today } from '@material-ui/icons';
+import Link from 'next/link';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Tooltip,
+  Typography,
+  Container
+} from '@material-ui/core';
+import { CalendarToday, List } from '@material-ui/icons';
 
-const useStyles = makeStyles(theme => ({
-  tabs: {
-    //background: theme.palette.primary.main
-  },
-  tab: {
-    fontWeight: 600
-  }
-}));
-
-const Navigation = ({ tab }) => {
-  const classes = useStyles();
-
+const LinkTab = ({ label, href, icon }) => {
+  const classes = {};
   return (
-    <AppBar position="static">
-      <Container maxWidth="sm">
-        <Tabs value={tab} variant="fullWidth" centered className={classes.tabs}>
-          <Tab
-            label="Teams"
-            component="a"
-            href="/"
-            className={classes.tab}
-            icon={<PlaylistAdd />}
-          />
-          <Tab
-            label="Schedule"
-            component="a"
-            href="/schedule"
-            className={classes.tab}
-            icon={<Today />}
-          />
-        </Tabs>
-      </Container>
-    </AppBar>
+    <Link href={href} passHref>
+      <Tooltip title={label}>
+        <IconButton component="a" color="inherit">
+          {icon}
+        </IconButton>
+      </Tooltip>
+    </Link>
   );
 };
+
+const Navigation = ({ tab }) => (
+  <AppBar position="static">
+    <Container maxWidth="md">
+      <LinkTab href="/" label="Teams" icon={<List />} />
+      <LinkTab href="/schedule" label="Schedule" icon={<CalendarToday />} />
+      {/* <IconButton>
+        <MoreVert />
+      </IconButton> */}
+    </Container>
+  </AppBar>
+);
 
 export default Navigation;

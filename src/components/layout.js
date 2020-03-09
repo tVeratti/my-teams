@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
   return (
     <div className={classes.layout}>
       <div className={classes.content}>{children}</div>
-      <Container maxWidth="sm" component="footer" className={classes.footer}>
+      <Container maxWidth="md" component="footer" className={classes.footer}>
         <Typography variant="caption" color="textSecondary">
           <a
             href="https://github.com/tVeratti/my-teams"

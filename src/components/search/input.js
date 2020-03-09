@@ -12,6 +12,8 @@ const useStyles = makeStyles(theme => {
       margin: theme.spacing(2, 0),
       padding: theme.spacing(2),
       paddingLeft: theme.spacing(8),
+      color: theme.palette.text.primary,
+      background: theme.palette.background.default,
       fontSize: theme.typography.h6.fontSize,
       border: `1px solid ${fade(theme.palette.primary.main, 0.5)}`,
       borderRadius: theme.shape.borderRadius,

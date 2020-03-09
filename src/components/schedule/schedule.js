@@ -1,16 +1,12 @@
-import {
-  Container,
-  Card,
-  CardContent,
-  Typography,
-  Divider
-} from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { flatten, sortBy, groupBy } from 'lodash';
 import memoize from 'memoize-one';
 import dayjs from 'dayjs';
 
 import useMyTeams from '../teams/useMyTeams';
+import Game from './game';
+import Heading from '../heading';
 
 // -- 1. Grey out days passed
 // -- 2. Made by / About
@@ -19,13 +15,6 @@ import useMyTeams from '../teams/useMyTeams';
 // 5. Alternate themes
 
 const today = dayjs();
-
-const ellipsisText = () => ({
-  display: 'block',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis'
-});
 
 const useStyles = makeStyles(theme => ({
   weekStart: {
@@ -36,32 +25,8 @@ const useStyles = makeStyles(theme => ({
     display: 'grid',
     padding: theme.spacing(1),
     width: '100%',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
     gridGap: theme.spacing(1)
-  },
-  card: {
-    display: 'flex',
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  done: {
-    opacity: 0.5
-  },
-  team: {
-    fontSize: theme.typography.h6.fontSize,
-    fontWeight: 600,
-    ...ellipsisText()
-  },
-  opponent: {
-    ...ellipsisText()
-  },
-  time: {
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(1),
-    borderRadius: theme.shape.borderRadius,
-    background: theme.palette.action.hover,
-    textAlign: 'center'
   }
 }));
 
@@ -95,51 +60,22 @@ const Schedule = () => {
   const teamNames = teams.map(t => t.name);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       {currentWeeks.map((date, i) => {
         const games = gameWeeks[date];
         return (
           <React.Fragment key={date}>
             <Typography variant="h4" className={classes.weekStart}>
-              {i === 0 ? 'This Week' : formatWeek(date)}
+              {i === 0 ? (
+                <Heading title="This Week" subtitle={formatWeek(date)} />
+              ) : (
+                formatWeek(date)
+              )}
             </Typography>
             <div className={classes.week}>
-              {games.map(g => {
-                const isHome = teamNames.includes(g.home);
-                const isBoth = isHome && teamNames.includes(g.away);
-                const isDone = dayjs()
-                  .subtract(1, 'day')
-                  .isAfter(dayjs(g.date));
-                const team = isHome ? g.home : g.away;
-                const opponent = isHome ? g.away : g.home;
-                const date = dayjs(g.date).format('ddd');
-                return (
-                  <Card
-                    key={`${g.home}-v-${g.away}`}
-                    elevation={0}
-                    variant="outlined"
-                    className={isDone && classes.done}
-                  >
-                    <CardContent className={classes.card}>
-                      <div>
-                        <Typography color="primary" className={classes.team}>
-                          {team}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="textSecondary"
-                          className={classes.opponent}
-                        >
-                          vs. {opponent}
-                        </Typography>
-                      </div>
-                      <Typography variant="h6" className={classes.time}>
-                        {isDone ? g.status : `${date}, ${g.time}`}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+              {games.map(g => (
+                <Game {...g} teams={teamNames} />
+              ))}
             </div>
           </React.Fragment>
         );
