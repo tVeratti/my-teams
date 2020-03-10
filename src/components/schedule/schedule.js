@@ -97,15 +97,25 @@ const Schedule = () => {
     <Container maxWidth="md">
       {currentWeeks.map((date, i) => {
         const games = gameWeeks[date];
+        let heading;
+        switch (i) {
+          case 0:
+            heading = 'This Week';
+            break;
+          case 1:
+            heading = 'Next Week';
+            break;
+          default:
+            heading = `In ${i} Weeks`;
+            break;
+        }
         return (
           <React.Fragment key={date}>
-            <Typography variant="h4" className={classes.weekStart}>
-              {i === 0 ? (
-                <Heading title="This Week" subtitle={formatWeek(date)} />
-              ) : (
-                formatWeek(date)
-              )}
-            </Typography>
+            <Heading
+              title={heading}
+              subtitle={formatWeek(date)}
+              className={classes.weekStart}
+            />
             <div className={classes.week}>
               {games.map(g => (
                 <Game {...g} teams={teamNames} />

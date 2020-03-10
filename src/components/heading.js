@@ -1,10 +1,10 @@
 import { Typography } from '@material-ui/core';
 
-const Heading = ({ title, subtitle }) => {
+const Heading = ({ title, subtitle, className }) => {
   return (
-    <div>
+    <div className={className}>
       <Typography variant="h4">{title}</Typography>
-      <Typography color="textSecondary">{subtitle}</Typography>
+      {subtitle && <Typography color="textSecondary">{subtitle}</Typography>}
     </div>
   );
 };

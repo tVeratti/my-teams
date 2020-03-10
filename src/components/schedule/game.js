@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius,
     background: theme.palette.action.hover,
     textAlign: 'center'
+  },
+  fromNow: {
+    marginTop: theme.spacing(-0.5)
   }
 }));
 
@@ -68,10 +71,19 @@ const Game = ({ teams, home, away, date, time }) => {
         >
           vs. {opponent}
         </Typography>
-        {day.fromNow()}
-        <Typography variant="h6" className={classes.time}>
-          {isDone ? 'Complete' : `${day.format('ddd')}, ${time}`}
-        </Typography>
+
+        <div className={classes.time}>
+          <Typography variant="h6">
+            {isDone ? 'Complete' : `${day.format('ddd')}, ${time}`}
+          </Typography>
+          <Typography
+            variant="subtitle2"
+            color="textSecondary"
+            className={classes.fromNow}
+          >
+            {day.fromNow()}
+          </Typography>
+        </div>
       </CardContent>
     </Card>
   );
