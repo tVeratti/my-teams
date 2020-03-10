@@ -1,4 +1,10 @@
-import { Container, Typography } from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  Button,
+  fade,
+  Divider
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { flatten, sortBy, groupBy } from 'lodash';
 import memoize from 'memoize-one';
@@ -7,6 +13,7 @@ import dayjs from 'dayjs';
 import useMyTeams from '../teams/useMyTeams';
 import Game from './game';
 import Heading from '../heading';
+import Link from 'next/link';
 
 // -- 1. Grey out days passed
 // -- 2. Made by / About
@@ -27,6 +34,16 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
     gridGap: theme.spacing(1)
+  },
+  none: {
+    marginTop: theme.spacing(5),
+    padding: theme.spacing(4, 2),
+    background: theme.palette.action.hover,
+    borderRadius: theme.shape.borderRadius,
+    textAlign: 'center'
+  },
+  return: {
+    marginTop: theme.spacing(2)
   }
 }));
 
@@ -44,10 +61,27 @@ const getGames = teams =>
 
 const memoizeGames = memoize(getGames);
 
+const NoTeams = () => {
+  const classes = useStyles();
+  return (
+    <Container maxWidth="md" className={classes.none}>
+      <Heading
+        title="No Teams Selected"
+        subtitle="You must have at least one team selected before you can view a schedule."
+      />
+      <Link href="/" passHref>
+        <Button color="primary" variant="outlined" className={classes.return}>
+          Return to Selection
+        </Button>
+      </Link>
+    </Container>
+  );
+};
+
 const Schedule = () => {
   const classes = useStyles();
   const [teams, setTeams] = useMyTeams();
-  if (!teams.length) return <div />;
+  if (!teams.length) return <NoTeams />;
 
   const gameWeeks = memoizeGames(teams);
   const weeks = Object.keys(gameWeeks);

@@ -1,6 +1,9 @@
 import { Card, CardContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 const ellipsisText = () => ({
   display: 'block',
@@ -45,7 +48,7 @@ const Game = ({ teams, home, away, date, time }) => {
     .isAfter(dayjs(date));
   const team = isHome ? home : away;
   const opponent = isHome ? away : home;
-  const day = dayjs(date).format('ddd');
+  const day = dayjs(`${date} ${time}`);
 
   return (
     <Card
@@ -65,9 +68,9 @@ const Game = ({ teams, home, away, date, time }) => {
         >
           vs. {opponent}
         </Typography>
-
+        {day.fromNow()}
         <Typography variant="h6" className={classes.time}>
-          {isDone ? 'Complete' : `${day}, ${time}`}
+          {isDone ? 'Complete' : `${day.format('ddd')}, ${time}`}
         </Typography>
       </CardContent>
     </Card>

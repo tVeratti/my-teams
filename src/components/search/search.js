@@ -10,8 +10,6 @@ import Heading from '../heading';
 
 const useStyles = makeStyles(theme => ({
   header: {
-    position: 'sticky',
-    top: 0,
     padding: theme.spacing(2, 0),
     backgroundColor: theme.palette.background.default,
     zIndex: 10
@@ -78,7 +76,7 @@ const Search = () => {
         </Container>
       </header>
       <section>
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Results
             filter={filter}
             selections={selections}
