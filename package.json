@@ -36,7 +36,7 @@
     "mongodb": "^3.5.4",
     "mongodb-client-encryption": "^1.0.1",
     "netlify-lambda": "^1.6.3",
-    "next": "^9.3.2",
+    "next": "^11.1.0",
     "nightmare": "^3.0.2"
   }
 }
